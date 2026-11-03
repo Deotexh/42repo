@@ -6,10 +6,10 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 12:52:21 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/03 13:22:15 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/03 17:35:38 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "libft.h"
 #include <stddef.h>
 
 size_t	ft_strlcpy( char *dst, const char *src, size_t size)

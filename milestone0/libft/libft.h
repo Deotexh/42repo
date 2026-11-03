@@ -9,9 +9,10 @@
 /*   Updated: 2026/11/03 15:12:25 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# include <stddef.h>
 
 int		ft_atoi(const char *nptr);
 void	ft_bzero(void *s, size_t n);

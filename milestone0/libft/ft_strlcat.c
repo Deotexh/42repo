@@ -9,7 +9,7 @@
 /*   Updated: 2026/11/03 15:13:06 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "libft.h"
 #include <stddef.h>
 
 static int	vi_checkstr(const char *str, size_t size)
@@ -48,21 +48,22 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (dst_len + ft_strlen(src));
 }
 
-#include <stdio.h>
-#include <bsd/string.h>
-int main()
-{
-	char dst[10] = "Ouais ";
-	char *src = "nan";
-	printf("%s\n", dst);
-	printf("%s\n", src);
-	printf("%zu\n", ft_strlcat(dst, src, 16));
-	printf("%s\n", dst);
-
-	char ddst[10] = "Ouais ";
-	char *dsrc = "nan";
-	printf("%s\n", ddst);
-	printf("%s\n", dsrc);
-	printf("%zu\n", strlcat(ddst, dsrc, 16));
-	printf("%s\n", ddst);
-}
+// #include <stdio.h>
+// #include <bsd/string.h>
+// int main()
+// {
+// 	char dst[10] = "Ouais ";
+// 	char *src = "nan";
+// 	printf("%s\n", dst);
+// 	printf("%s\n", src);
+// 	printf("%zu\n", ft_strlcat(dst, src, 16));
+// 	printf("%s\n", dst);
+//
+// 	printf("====\n");
+// 	char ddst[10] = "Ouais ";
+// 	char *dsrc = "nan";
+// 	printf("%s\n", ddst);
+// 	printf("%s\n", dsrc);
+// 	printf("%zu\n", strlcat(ddst, dsrc, 16));
+// 	printf("%s\n", ddst);
+// }
