@@ -1,0 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_show_tab.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/03 17:29:55 by vitruong          #+#    #+#             */
+/*   Updated: 2026/08/03 17:36:26 by vitruong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <unistd.h>
+#include "ft_stock_str.h"
+
+void	vi_putnbr(int nb)
+{
+	char	c;
+
+	if (nb > 9)
+		vi_putnbr(nb / 10);
+	c = (nb % 10) + '0';
+	write(1, &c, 1);
+}
+
+void	vi_putstr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	write(1, "\n", 1);
+}
+
+void	ft_show_tab(struct s_stock_str *par)
+{
+	int	i;
+
+	i = 0;
+	while (par[i].str != 0)
+	{
+		vi_putstr(par[i].str);
+		vi_putnbr(par[i].size);
+		write(1, "\n", 1);
+		vi_putstr(par[i].copy);
+		i++;
+	}
+}
