@@ -26,8 +26,14 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		if (big[search_i] == little[0])
 		{
 			cmp_i = 0;
-			while (little[cmp_i] == big[search_i + cmp_i] && little[cmp_i])
+			while (little[cmp_i] != '\0')
+			{
+				if (cmp_i + search_i >= len)
+					return ((void *)0);
+				if (big[cmp_i + search_i] != little[cmp_i])
+					break ;
 				cmp_i++;
+			}
 			if (little[cmp_i] == '\0')
 				return ((char *)(big + search_i));
 		}

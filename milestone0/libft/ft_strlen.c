@@ -6,10 +6,9 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/02 12:52:21 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/02 13:32:51 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/04 11:06:02 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include <stddef.h>
 
 size_t	ft_strlen(const char *s)

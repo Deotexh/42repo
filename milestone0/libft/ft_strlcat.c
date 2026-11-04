@@ -34,13 +34,15 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 
 	if (!dst || !src)
 		return (0);
-	dst_len = ft_strlen(dst);
-	size_cpy = size - dst_len - 1;
 	if (size == 0 || vi_checkstr(dst, size) == 0)
 		return (size + ft_strlen(src));
+	dst_len = ft_strlen(dst);
+	size_cpy = size - dst_len - 1;
 	i = 0;
 	while (i < size_cpy)
 	{
+		if (src[i] == '\0')
+			break ;
 		dst[i + dst_len] = src[i];
 		i++;
 	}

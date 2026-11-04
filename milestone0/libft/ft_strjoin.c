@@ -9,72 +9,8 @@
 /*   Updated: 2026/11/03 17:44:48 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 #include <stdlib.h>
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	size;
-
-	size = 0;
-	while (s[size] != '\0')
-		size++;
-	return (size);
-}
-
-static int	vi_checkstr(const char *str, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (str[i] == '\0')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	size_cpy;
-	size_t	dst_len;
-
-	if (!dst || !src)
-		return (0);
-	dst_len = ft_strlen(dst);
-	size_cpy = size - dst_len - 1;
-	if (size == 0 || vi_checkstr(dst, size) == 0)
-		return (size + ft_strlen(src));
-	i = 0;
-	while (i < size_cpy)
-	{
-		dst[i + dst_len] = src[i];
-		i++;
-	}
-	dst[i + dst_len] = '\0';
-	return (dst_len + ft_strlen(src));
-}
-
-size_t	ft_strlcpy( char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	if (!dst || !src)
-		return 0;
-	if (size == 0)
-		return (ft_strlen(src));
-	i = 0;
-	while (i < size - 1)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (ft_strlen(src));
-}
+#include "libft.h"
 
 char *ft_strjoin(char const *s1, char const *s2)
 {

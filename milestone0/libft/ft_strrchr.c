@@ -14,6 +14,7 @@ char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
+	c = (unsigned char)c % 256;
 	if (!s)
 		return ((void *)0);
 	i = 0;
@@ -21,7 +22,7 @@ char	*ft_strrchr(const char *s, int c)
 		i++;
 	while (i >= 0)
 	{
-		if (s[i] == c)
+		if ((unsigned char)s[i] == c)
 			return ((char *)s + i);
 		i--;
 	}
