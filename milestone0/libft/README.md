@@ -32,4 +32,4 @@ Using the `man` command can be useful for some functions since they are replicat
 - Linked list - https://en.wikipedia.org/wiki/Linked_list
 - Make - https://www.gnu.org/software/make/, https://en.wikipedia.org/wiki/Make_(software)
 
-### NO AI WAS USED TO GENERATE CODE OR TEXT.
+**NO AI WAS USED TO GENERATE CODE OR TEXT. IT MAY HAVE BEEN USED DURING RESEARCH**
