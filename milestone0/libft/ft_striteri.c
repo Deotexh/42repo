@@ -9,9 +9,9 @@
 /*   Updated: 2026/11/04 18:27:41 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-void	ft_striteri(char *s, void (*f)(unsigned int, char*))	
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int 	i;
+	int	i;
 
 	if (!s || !f)
 		return ;

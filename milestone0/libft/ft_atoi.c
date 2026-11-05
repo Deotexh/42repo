@@ -20,7 +20,7 @@ static int	vi_isspace(char c)
 static int	vi_handle_beginning(const char *nptr, int *sign)
 {
 	int	i;
-	
+
 	i = 0;
 	*sign = 1;
 	while (vi_isspace(nptr[i]))
@@ -40,9 +40,9 @@ static int	vi_handle_beginning(const char *nptr, int *sign)
 int	ft_atoi(const char *nptr)
 {
 	long	result;
-	int	sign;
-	int	i;
-	int	first_d;
+	int		sign;
+	int		i;
+	int		first_d;
 
 	if (!nptr)
 		return (0);

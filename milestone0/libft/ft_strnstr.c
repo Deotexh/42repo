@@ -14,7 +14,7 @@
 static int	vi_cmp_str(const char *big, const char *little, size_t start_i,
 	size_t len)
 {
-	size_t cmp_i;
+	size_t	cmp_i;
 
 	cmp_i = 0;
 	while (little[cmp_i] != '\0')

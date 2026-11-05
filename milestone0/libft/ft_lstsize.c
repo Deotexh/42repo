@@ -13,8 +13,8 @@
 
 unsigned int	ft_lstsize(t_list *lst)
 {
-	unsigned int count;
-	t_list		*current;
+	unsigned int	count;
+	t_list			*current;
 
 	if (!lst)
 		return (0);

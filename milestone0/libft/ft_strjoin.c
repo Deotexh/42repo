@@ -12,11 +12,11 @@
 #include <stdlib.h>
 #include "libft.h"
 
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *new_str;
-	int s1_len;
-	int s2_len;
+	char	*new_str;
+	int		s1_len;
+	int		s2_len;
 
 	if (!s1 || !s2)
 		return ((void *)0);

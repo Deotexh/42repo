@@ -29,6 +29,16 @@ static int	vi_count_substr(char const *s, char c)
 	return (count);
 }
 
+static void	vi_free_all(char **array, int arr_i)
+{
+	while (arr_i >= 0)
+	{
+		free(array[arr_i]);
+		arr_i--;
+	}
+	free(array);
+}
+
 static char	*vi_get_split(char const *s, char c, int *i)
 {
 	char	*ptr;
@@ -52,14 +62,14 @@ static char	*vi_get_split(char const *s, char c, int *i)
 	return (ptr);
 }
 
-static void	vi_free_all(char **array, int arr_i)
+static int	vi_init(char const *s, char c, char ***array)
 {
-	while (arr_i >= 0)
-	{
-		free(array[arr_i]);
-		arr_i--;
-	}
-	free(array);
+	if (!s)
+		return (0);
+	*array = malloc((vi_count_substr(s, c) + 1) * sizeof(char *));
+	if (!(*array))
+		return (0);
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -69,12 +79,9 @@ char	**ft_split(char const *s, char c)
 	int		arr_i;
 	int		str_i;
 
-	if (!s)
+	if (!vi_init(s, c, &array))
 		return ((void *)0);
 	arr_i = 0;
-	array = malloc((vi_count_substr(s, c) + 1) * sizeof(char *));
-	if (!array)
-		return ((void *)0);
 	str_i = 0;
 	while (s[str_i] != '\0')
 	{
@@ -88,8 +95,7 @@ char	**ft_split(char const *s, char c)
 			vi_free_all(array, arr_i - 1);
 			return ((void *)0);
 		}
-		array[arr_i] = temp_i;
-		arr_i++;
+		array[arr_i++] = temp_i;
 	}
 	array[arr_i] = (void *)0;
 	return (array);
