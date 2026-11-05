@@ -18,10 +18,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *))
 	if (!lst || !f)
 		return ;
 	current = lst;
-	while (current->next)
+	while (current)
 	{
+		f(current->content);
 		current = current->next;
-		f(&(current->content));
 	}
 }
 

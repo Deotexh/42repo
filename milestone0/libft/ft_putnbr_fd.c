@@ -14,7 +14,7 @@
 
 static void	vi_print_digit(int nbr, int fd)
 {
-	int digit;
+	int	digit;
 
 	if (nbr / 10 != 0)
 		vi_print_digit(nbr / 10, fd);

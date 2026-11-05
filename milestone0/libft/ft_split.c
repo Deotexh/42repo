@@ -13,85 +13,84 @@
 #include <stdlib.h>
 #include "libft.h"
 
-
-static int vi_count_substr(char const *s, char c)
+static int	vi_count_substr(char const *s, char c)
 {
-  int i;
-  int count;
+	int	i;
+	int	count;
 
-  i = 0;
-  count = 0;
-  while (s[i] != '\0')
-  {
-    if (s[i] != c && (s[i - 1] == c || i == 0))
-      count++;
-    i++;
-  }
-  return (count);
+	i = 0;
+	count = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c && (s[i - 1] == c || i == 0))
+			count++;
+		i++;
+	}
+	return (count);
 }
 
-static char *vi_get_split(char const *s, char c, int *i)
+static char	*vi_get_split(char const *s, char c, int *i)
 {
-  char *ptr;
-  int start;
-  int write_i;
+	char	*ptr;
+	int		start;
+	int		write_i;
 
-  start = *i;
-  while (s[*i] != c && s[*i] != '\0')
-    *i += 1;
-
-  ptr = malloc(*i - start + 1);
-  if (!ptr)
-    return ((void *)0);
-  write_i = 0;
-  while (start < *i) {
-    ptr[write_i] = s[start];
-    write_i++;
-    start++;
-  }
-  ptr[write_i] = '\0';
-  return (ptr);
+	start = *i;
+	while (s[*i] != c && s[*i] != '\0')
+		*i += 1;
+	ptr = malloc(*i - start + 1);
+	if (!ptr)
+		return ((void *)0);
+	write_i = 0;
+	while (start < *i)
+	{
+		ptr[write_i] = s[start];
+		write_i++;
+		start++;
+	}
+	ptr[write_i] = '\0';
+	return (ptr);
 }
 
-static void vi_free_all(char **array, int arr_i)
+static void	vi_free_all(char **array, int arr_i)
 {
-  while (arr_i >= 0)
-  {
-    free(array[arr_i]);
-    arr_i--;
-  }
-  free(array);
+	while (arr_i >= 0)
+	{
+		free(array[arr_i]);
+		arr_i--;
+	}
+	free(array);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-  char **array;
-  char *temp_i;
-  int arr_i;
-  int str_i;
+	char	**array;
+	char	*temp_i;
+	int		arr_i;
+	int		str_i;
 
-  if (!s)
-    return ((void *)0);
-  arr_i = 0;
-  array = malloc((vi_count_substr(s, c) + 1) * sizeof(char *));
-  if (!array)
-	  return ((void *)0);
-  str_i = 0;
-  while (s[str_i] != '\0')
-  {
-	  while (s[str_i] == c)
-		  str_i++;
-	  if (s[str_i] == '\0')
-		  break ;
-	  temp_i = vi_get_split(s, c, &str_i);
-	  if (!temp_i)
-	  {
-		  vi_free_all(array, arr_i - 1);
-		  return ((void *)0);
-	  }
-	  array[arr_i] = temp_i;
-	  arr_i++;
-  }
-  array[arr_i] = (void *)0;
-  return (array);
+	if (!s)
+		return ((void *)0);
+	arr_i = 0;
+	array = malloc((vi_count_substr(s, c) + 1) * sizeof(char *));
+	if (!array)
+		return ((void *)0);
+	str_i = 0;
+	while (s[str_i] != '\0')
+	{
+		while (s[str_i] == c)
+			str_i++;
+		if (s[str_i] == '\0')
+			break ;
+		temp_i = vi_get_split(s, c, &str_i);
+		if (!temp_i)
+		{
+			vi_free_all(array, arr_i - 1);
+			return ((void *)0);
+		}
+		array[arr_i] = temp_i;
+		arr_i++;
+	}
+	array[arr_i] = (void *)0;
+	return (array);
 }

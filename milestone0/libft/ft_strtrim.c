@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 #include <stdlib.h>
 
-static int vi_hasset(char const c, char const *set) {
+static int vi_hasset(char const c, char const *set)
+{
   int i;
   i = 0;
   while (set[i] != '\0') {
@@ -22,7 +23,8 @@ static int vi_hasset(char const c, char const *set) {
   return (0);
 }
 
-char *ft_strtrim(char const *s1, char const *set) {
+char *ft_strtrim(char const *s1, char const *set)
+{
   char *new_str;
   int start;
   int end;
