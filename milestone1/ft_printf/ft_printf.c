@@ -6,12 +6,11 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 11:43:01 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/06 19:50:08 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/07 13:43:29 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdarg.h>
-#include "libft/libft.h"
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 int	ft_printf(const char *str, ...)
 {
@@ -31,23 +30,21 @@ int	ft_printf(const char *str, ...)
 		print_i++;
 	}
 	va_end(argptr);
-	return(print_i);
+	return (print_i);
 }
 
-size_t	vi_print_arg(char conversion_type, t_format_specs infos,
-	va_list *argptr)
+size_t	vi_print_arg(char format_type, t_format_specs infos, va_list *argptr)
 {
-	if (conversion_type == 'd' || conversion_type == 'i')
-		vi_print_int(va_arg(*argptr, int));
-	else if (conversion_type == 'c') { }
+	if (format_type == 'd' || format_type == 'i')
+		vi_print_int(va_arg(*argptr, int), infos);
+	else if (format_type == 'c')
 		ft_putchar_fd(va_arg(*argptr, char), 1);
-	else if (conversion_type == 's') { }
-		vi_print_str(va_arg(*argptr, char *));
-	else if (conversion_type == 'p') { }
-		vi_print_ptr(va_arg(*argptr, void *));
-	else if (conversion_type == 'u') { }
-		vi_print_uint(va_arg(*argptr, unsigned int));
-	else if (conversion_type == 'x' || conversion_type == 'X') { }
-		vi_print_hex(va_arg(*argptr, unsigned int));
+	else if (format_type == 's')
+		vi_print_str(va_arg(*argptr, char *), infos);
+	else if (format_type == 'p')
+		vi_print_ptr(va_arg(*argptr, void *), infos);
+	else if (format_type == 'u')
+		vi_print_uint(va_arg(*argptr, unsigned int), infos);
+	else if (format_type == 'x' || format_type == 'X')
+		vi_print_hex(va_arg(*argptr, unsigned int), infos);
 }
-
