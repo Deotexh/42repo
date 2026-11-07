@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conversions.c                                      :+:      :+:    :+:   */
+/*   format_specs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -43,7 +43,7 @@ static size_t	vi_handle_flags(char *str, size_t i, unsigned char *flags)
 	return (i);
 }
 
-static size_t	vi_get_conversion_info(t_conversion_info *infos, size_t i)
+static size_t	vi_get_conversion_info(t_format_specs *infos, size_t i)
 {
 	info->flags = 0;
 	info->width = 0;
@@ -57,7 +57,7 @@ static size_t	vi_get_conversion_info(t_conversion_info *infos, size_t i)
 		while (ft_isdigit(str[i]))
 			i++;
 	}
-	if (vi_is_fromset(str[i], "."))
+	if (str[i] == '.')
 	{
 		i += 1;
 		info->precision = ft_atoi(str + i);
@@ -69,7 +69,7 @@ static size_t	vi_get_conversion_info(t_conversion_info *infos, size_t i)
 
 size_t	vi_handle_formatspec(char *str, size_t i, va_list *argptr)
 {
-	t_conversion_info	infos;
+	t_format_specs	infos;
 
 	if (str[i] == '%')
 	{
