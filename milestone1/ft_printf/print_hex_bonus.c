@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_uint.c                                       :+:      :+:    :+:   */
+/*   print_hex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/09 18:16:11 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/09 18:44:02 by vitruong         ###   ########.fr       */
+/*   Created: 2026/11/09 19:50:59 by vitruong          #+#    #+#             */
+/*   Updated: 2026/11/10 15:53:04 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "ft_printf.h"
 #include "libft/libft.h"
 
@@ -25,15 +24,13 @@ static unsigned int	vi_get_precision_padding(unsigned int precision_info,
 }
 
 static unsigned int	vi_get_width_padding(unsigned int width_info,
-		unsigned int nbr, unsigned int precision_pad)
+		unsigned int digit_count, unsigned int precision_pad, int has_flag_hash)
 {
-	unsigned int	digit_count;
-
-	digit_count = vi_count_digits_uint(nbr);
-	if (precision_pad == 0 && nbr == 0)
+	if (precision_pad == 0 && digit_count == 0)
 		digit_count = 0;
-	if (width_info > digit_count + precision_pad)
-		return (width_info - (digit_count + precision_pad));
+	if (width_info > digit_count + precision_pad + (has_flag_hash * 2))
+		return (width_info - (digit_count + precision_pad + (has_flag_hash
+					* 2)));
 	else
 		return (0);
 }
@@ -49,27 +46,34 @@ static void	vi_print_width_pad(unsigned int width_pad, unsigned char flags,
 		vi_print_alignment(width_pad, ' ');
 }
 
-static void	vi_print_precision_pad(unsigned int precision_pad)
+static void	vi_recursive_hex_print(size_t nbr, int is_useupcase)
 {
-	if (precision_pad == 0)
-		return ;
-	vi_print_alignment(precision_pad, '0');
+	if (nbr / 16 != 0)
+		vi_recursive_hex_print(nbr / 16, is_useupcase);
+	ft_putchar_fd(find_hex_char(nbr, is_useupcase), 1);
 }
-void	vi_print_uint(unsigned int arg, t_format_specs infos)
+
+void	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
 {
 	unsigned int	precision_pad;
 	unsigned int	width_pad;
 	unsigned int	digit_count;
 
-	digit_count = vi_count_digits_uint(arg);
-	infos.flags &= ~(FLAG_PLUS | FLAG_BLANK);
+	digit_count = vi_count_digits_hex((size_t)arg);
 	precision_pad = vi_get_precision_padding(infos.precision, digit_count);
-	width_pad = vi_get_width_padding(infos.width, arg, precision_pad);
-	if (!(infos.flags & FLAG_DASH))
+	width_pad = vi_get_width_padding(infos.width, digit_count, precision_pad,
+			infos.flags & FLAG_HASH);
+	if (!(infos.flags & FLAG_DASH) && !(infos.flags & FLAG_ZERO))
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
-	vi_print_precision_pad(precision_pad);
+	if (infos.flags & FLAG_HASH && !(format_type == 'X') && arg != 0)
+		ft_putstr_fd("0x", 1);
+	else if (infos.flags & FLAG_HASH && (format_type == 'X') && arg != 0)
+		ft_putstr_fd("0X", 1);
+	vi_print_alignment(precision_pad, '0');
+	if (!(infos.flags & FLAG_DASH) && infos.flags & FLAG_ZERO)
+		vi_print_width_pad(width_pad, infos.flags, precision_pad);
 	if (!(infos.precision == 0 && arg == 0))
-		vi_putnbr_fd_uint(arg, 1);
+		vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
 	if (infos.flags & FLAG_DASH)
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
 }

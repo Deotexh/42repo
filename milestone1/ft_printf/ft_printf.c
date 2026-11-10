@@ -45,6 +45,6 @@ void	vi_print_arg(char format_type, t_format_specs infos, va_list *argptr)
 		vi_print_str(va_arg(*argptr, char *), infos);
 	else if (format_type == 'x' || format_type == 'X')
 		vi_print_hex(va_arg(*argptr, unsigned int), infos, format_type);
-	// else if (format_type == 'p')
-	// 	vi_print_ptr(va_arg(*argptr, void *), infos);
+	else if (format_type == 'p')
+		vi_print_ptr(va_arg(*argptr, void *), infos);
 }
