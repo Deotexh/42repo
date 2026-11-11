@@ -28,14 +28,14 @@ static int	vi_is_fromset(char const c, char const *set)
 
 size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr)
 {
-	if (vi_is_fromset("+ 0-#.", i) || str[i] == '%')
+	if (vi_is_fromset(str[i], "+ 0-#.%"))
 	{
 		ft_putchar_fd('%', 1);
-		if (vi_is_fromset("+ 0-#.", i))
-			return (i);
-		else
+		if (str[i] == '%')
 			return (i + 1);
+		else
+			return (i);
 	}
-	vi_print_arg(str[i], NULL, argptr);
+	vi_print_arg(str[i], (t_format_specs){}, argptr);
 	return (i + 1);
 }

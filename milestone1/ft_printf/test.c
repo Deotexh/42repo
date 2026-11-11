@@ -4,8 +4,8 @@
 
 int	main(void)
 {
-	char *str = "Bonjour %20u.\n";
-	void * value = (void *)255;
+	char *str = "Bonjour %x.\n";
+	unsigned int value = 0;
 	ft_printf(str, value);
 	printf(str, value);
 }

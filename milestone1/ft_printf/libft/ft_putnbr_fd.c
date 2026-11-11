@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/04 10:32:58 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/04 11:06:41 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/09 18:32:39 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -28,9 +28,6 @@ static void	vi_print_digit(int nbr, int fd)
 void	ft_putnbr_fd(int n, int fd)
 {
 	if (n < 0)
-	{
 		ft_putchar_fd('-', fd);
-		n *= -1;
-	}
 	vi_print_digit(n, fd);
 }

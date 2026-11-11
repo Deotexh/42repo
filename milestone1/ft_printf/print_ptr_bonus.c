@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_ptr.c                                        :+:      :+:    :+:   */
+/*   print_ptr_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:46:47 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/10 15:53:37 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/11 13:07:33 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/libft.h"
@@ -39,14 +39,6 @@ static unsigned int	vi_get_width_padding(unsigned int width_info,
 		return (0);
 }
 
-static void	vi_recursive_hex_print(size_t nbr)
-{
-	if (nbr / 16 != 0)
-		vi_recursive_hex_print(nbr / 16);
-
-	ft_putchar_fd(find_hex_char(nbr, 0), 1);
-}
-
 void				vi_print_ptr(void *arg, t_format_specs infos)
 {
 	unsigned int	precision_pad;
@@ -65,7 +57,7 @@ void				vi_print_ptr(void *arg, t_format_specs infos)
 	{
 		ft_putstr_fd("0x", 1);
 		vi_print_alignment(precision_pad, '0');
-		vi_recursive_hex_print((size_t)arg);
+		vi_recursive_hex_print((size_t)arg, 0);
 	}
 	else
 		ft_putstr_fd("(nil)", 1);

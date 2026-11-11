@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_hex.c                                        :+:      :+:    :+:   */
+/*   print_hex_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 19:50:59 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/10 15:53:04 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/11 14:02:26 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -44,13 +44,6 @@ static void	vi_print_width_pad(unsigned int width_pad, unsigned char flags,
 		vi_print_alignment(width_pad, '0');
 	else
 		vi_print_alignment(width_pad, ' ');
-}
-
-static void	vi_recursive_hex_print(size_t nbr, int is_useupcase)
-{
-	if (nbr / 16 != 0)
-		vi_recursive_hex_print(nbr / 16, is_useupcase);
-	ft_putchar_fd(find_hex_char(nbr, is_useupcase), 1);
 }
 
 void	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
