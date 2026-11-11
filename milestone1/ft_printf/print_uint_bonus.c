@@ -56,7 +56,7 @@ static void	vi_print_precision_pad(unsigned int precision_pad)
 	vi_print_alignment(precision_pad, '0');
 }
 
-void	vi_print_uint(unsigned int arg, t_format_specs infos)
+size_t	vi_print_uint(unsigned int arg, t_format_specs infos)
 {
 	unsigned int	precision_pad;
 	unsigned int	width_pad;
@@ -72,4 +72,6 @@ void	vi_print_uint(unsigned int arg, t_format_specs infos)
 		vi_putnbr_fd_uint(arg, 1);
 	if (infos.flags & FLAG_DASH)
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
+	return (digit_count * !(infos.precision == 0 && arg == 0) + width_pad
+		+ precision_pad);
 }

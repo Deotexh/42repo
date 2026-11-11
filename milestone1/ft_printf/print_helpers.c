@@ -12,19 +12,17 @@
 #include "libft/libft.h"
 #include <stddef.h>
 
-static void	vi_print_digit_uint(long nbr, int fd)
+size_t	vi_putnbr_fd_uint(long nbr, int fd)
 {
 	int	digit;
+	size_t	print_count;
 
+	print_count = 0;
 	if (nbr / 10 != 0)
-		vi_print_digit_uint(nbr / 10, fd);
+		print_count = vi_putnbr_fd_uint(nbr / 10, fd);
 	digit = nbr % 10;
 	ft_putchar_fd(digit + '0', fd);
-}
-
-void	vi_putnbr_fd_uint(long n, int fd)
-{
-	vi_print_digit_uint(n, fd);
+	return (print_count + 1);
 }
 
 static char	find_hex_char(size_t nbr, int is_useupcase)
@@ -36,9 +34,13 @@ static char	find_hex_char(size_t nbr, int is_useupcase)
 		return (nbr - 10 + 'a' - (is_useupcase * 32));
 }
 
-void	vi_recursive_hex_print(size_t nbr, int is_useupcase)
+size_t	vi_recursive_hex_print(size_t nbr, int is_useupcase)
 {
+	size_t print_count;
+
+	print_count = 0;
 	if (nbr / 16 != 0)
-		vi_recursive_hex_print(nbr / 16, is_useupcase);
+		print_count = vi_recursive_hex_print(nbr / 16, is_useupcase);
 	ft_putchar_fd(find_hex_char(nbr, is_useupcase), 1);
+	return (print_count + 1);
 }

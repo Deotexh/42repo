@@ -30,7 +30,7 @@ static void	vi_print_width_pad(unsigned int width_pad)
 	vi_print_alignment(width_pad, ' ');
 }
 
-void	vi_print_str(char *arg, t_format_specs infos)
+size_t	vi_print_str(char *arg, t_format_specs infos)
 {
 	unsigned int	width_pad;
 	unsigned int	to_write_count;
@@ -39,11 +39,14 @@ void	vi_print_str(char *arg, t_format_specs infos)
 		to_write_count = get_to_write_count(arg, infos.precision);
 	else
 		to_write_count = ft_strlen(arg);
-	width_pad = infos.width - to_write_count;
+	width_pad = 0;
+	if (infos.width > to_write_count)
+		width_pad = infos.width - to_write_count;
 	if (!(infos.flags & FLAG_DASH))
 		vi_print_width_pad(width_pad);
 	if (!(infos.precision == 0 && arg == 0))
 		write(1, arg, to_write_count);
 	if (infos.flags & FLAG_DASH)
 		vi_print_width_pad(width_pad);
+	return (width_pad + to_write_count);
 }

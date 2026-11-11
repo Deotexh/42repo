@@ -39,7 +39,7 @@ static unsigned int	vi_get_width_padding(unsigned int width_info,
 		return (0);
 }
 
-void				vi_print_ptr(void *arg, t_format_specs infos)
+size_t				vi_print_ptr(void *arg, t_format_specs infos)
 {
 	unsigned int	precision_pad;
 	unsigned int	width_pad;
@@ -56,11 +56,16 @@ void				vi_print_ptr(void *arg, t_format_specs infos)
 	if (arg)
 	{
 		ft_putstr_fd("0x", 1);
+		char_count += 2;
 		vi_print_alignment(precision_pad, '0');
 		vi_recursive_hex_print((size_t)arg, 0);
 	}
 	else
+	{
 		ft_putstr_fd("(nil)", 1);
+		char_count = 5;
+	}
 	if (infos.flags & FLAG_DASH)
 		vi_print_alignment(width_pad, ' ');
+	return (char_count + precision_pad + width_pad);
 }

@@ -12,7 +12,11 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-void	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
+size_t	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
 {
-	vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
+	size_t print_count;
+
+	(void)infos;
+	print_count = vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
+	return (print_count);
 }

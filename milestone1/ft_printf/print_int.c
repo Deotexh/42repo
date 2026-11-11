@@ -12,9 +12,13 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-void	vi_print_int(int arg, t_format_specs infos)
+size_t	vi_print_int(int arg, t_format_specs infos)
 {
-	else if (arg < 0)
+	size_t print_count;
+
+	(void)infos;
+	if (arg < 0)
 		ft_putchar_fd('-', 1);
-	vi_putnbr_fd_uint(-arg * (arg < 0) + arg * (arg >= 0), 1);
+	print_count = vi_putnbr_fd_uint(-arg * (arg < 0) + arg * (arg >= 0), 1);
+	return (print_count);
 }

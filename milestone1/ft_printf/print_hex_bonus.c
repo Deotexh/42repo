@@ -46,27 +46,42 @@ static void	vi_print_width_pad(unsigned int width_pad, unsigned char flags,
 		vi_print_alignment(width_pad, ' ');
 }
 
-void	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
+static size_t vi_handle_hash(unsigned int arg, unsigned char flags, char format_type)
+{
+	if (flags & FLAG_HASH && !(format_type == 'X') && arg != 0)
+	{
+		ft_putstr_fd("0x", 1);
+		return (2);
+	}
+	else if (flags & FLAG_HASH && (format_type == 'X') && arg != 0)
+	{
+		ft_putstr_fd("0X", 1);
+		return (2);
+	}
+	return (0);
+}
+
+size_t	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
 {
 	unsigned int	precision_pad;
 	unsigned int	width_pad;
 	unsigned int	digit_count;
+	size_t print_count;
 
+	print_count = 0;
 	digit_count = vi_count_digits_hex((size_t)arg);
 	precision_pad = vi_get_precision_padding(infos.precision, digit_count);
 	width_pad = vi_get_width_padding(infos.width, digit_count, precision_pad,
 			infos.flags & FLAG_HASH);
 	if (!(infos.flags & FLAG_DASH) && !(infos.flags & FLAG_ZERO))
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
-	if (infos.flags & FLAG_HASH && !(format_type == 'X') && arg != 0)
-		ft_putstr_fd("0x", 1);
-	else if (infos.flags & FLAG_HASH && (format_type == 'X') && arg != 0)
-		ft_putstr_fd("0X", 1);
+	vi_handle_hash(arg, infos.flags, format_type);
 	vi_print_alignment(precision_pad, '0');
 	if (!(infos.flags & FLAG_DASH) && infos.flags & FLAG_ZERO)
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
 	if (!(infos.precision == 0 && arg == 0))
-		vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
+		print_count = vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
 	if (infos.flags & FLAG_DASH)
 		vi_print_width_pad(width_pad, infos.flags, precision_pad);
+	return (print_count + width_pad);
 }

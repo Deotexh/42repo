@@ -13,7 +13,11 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-void	vi_print_uint(unsigned int arg, t_format_specs infos)
+size_t	vi_print_uint(unsigned int arg, t_format_specs infos)
 {
-	vi_putnbr_fd_uint(arg, 1);
+	size_t print_count;
+
+	(void)infos;
+	print_count = vi_putnbr_fd_uint(arg, 1);
+	return (print_count);
 }

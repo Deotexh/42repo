@@ -4,10 +4,12 @@
 
 int	main(void)
 {
-	char *str = "Bonjour %x.\n";
-	unsigned int value = 0;
-	ft_printf(str, value);
-	printf(str, value);
+	char *str = "%p";
+	char *value = "Bonjour";
+	int result1 = ft_printf(str, value);
+	int result2 = printf(str, value);
+
+	printf("\n\nMine:\t\t%d\nOriginal:\t%d\n", result1, result2);
 }
 
 /*

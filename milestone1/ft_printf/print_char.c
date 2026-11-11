@@ -12,7 +12,9 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-void	vi_print_char(unsigned char arg, t_format_specs infos)
+size_t	vi_print_char(unsigned char arg, t_format_specs infos)
 {
+	(void)infos;
 	ft_putchar_fd(arg, 1);
+	return (1);
 }

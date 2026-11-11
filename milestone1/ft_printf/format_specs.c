@@ -26,16 +26,18 @@ static int	vi_is_fromset(char const c, char const *set)
 	return (0);
 }
 
-size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr)
+size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
+		size_t *print_count)
 {
 	if (vi_is_fromset(str[i], "+ 0-#.%"))
 	{
 		ft_putchar_fd('%', 1);
+		(*print_count)++;
 		if (str[i] == '%')
 			return (i + 1);
 		else
 			return (i);
 	}
-	vi_print_arg(str[i], (t_format_specs){}, argptr);
+	*print_count = vi_print_arg(str[i], (t_format_specs){}, argptr);
 	return (i + 1);
 }

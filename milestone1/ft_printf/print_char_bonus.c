@@ -19,7 +19,7 @@ static void	vi_print_width_pad(unsigned int width_pad)
 	vi_print_alignment(width_pad, ' ');
 }
 
-void	vi_print_char(unsigned char arg, t_format_specs infos)
+size_t	vi_print_char(unsigned char arg, t_format_specs infos)
 {
 	unsigned int	width_pad;
 
@@ -33,4 +33,5 @@ void	vi_print_char(unsigned char arg, t_format_specs infos)
 		ft_putchar_fd(arg, 1);
 	if (infos.flags & FLAG_DASH)
 		vi_print_width_pad(width_pad);
+	return (width_pad + 1);
 }
