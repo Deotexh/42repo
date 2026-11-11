@@ -5,13 +5,16 @@ NAME = libftprintf.a
 ARFLAGS = L./libft
 ARLIBS = libft.a
 
-SOURCES = 
+SOURCES = ft_printf.c print_helpers.c format_specs.c
 OBJECTS = $(SOURCES:.c=.o)
 
-SOURCES_UNBONUS = 
+SOURCES_UNBONUS = print_hex.c print_str.c print_str.c print_char.c print_int.c\
+				  print_uint.c
 OBJECTS_UNBONUS = $(SOURCES_UNBONUS:.c=.o)
 
-SOURCES_BONUS = 
+SOURCES_BONUS = print_hex_bonus.c print_str_bonus.c print_str_bonus.c\
+				print_char_bonus.c print_int_bonus.c print_uint_bonus.c\
+				print_helpers_bonus.c format_specs_bonus.c helpers_bonus.c
 OBJECTS_BONUS = $(SOURCES_BONUS:.c=.o)
 
 all: $(NAME)
