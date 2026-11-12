@@ -26,10 +26,12 @@ static int	vi_is_fromset(char const c, char const *set)
 	return (0);
 }
 
-size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
+ssize_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 		size_t *print_count)
 {
-	if (vi_is_fromset(str[i], "+ 0-#.%"))
+	if (str[i] == '\0')
+			return (-1);
+	if (!vi_is_fromset(str[i], "cpdiusxX"))
 	{
 		ft_putchar_fd('%', 1);
 		(*print_count)++;
@@ -38,6 +40,6 @@ size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 		else
 			return (i);
 	}
-	*print_count = vi_print_arg(str[i], (t_format_specs){}, argptr);
+	*print_count += vi_print_arg(str[i], (t_format_specs){}, argptr);
 	return (i + 1);
 }

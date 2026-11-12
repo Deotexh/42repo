@@ -12,13 +12,6 @@
 #include "../ft_printf.h"
 #include "../libft/libft.h"
 
-static void	vi_print_width_pad(unsigned int width_pad)
-{
-	if (width_pad == 0)
-		return ;
-	vi_print_alignment(width_pad, ' ');
-}
-
 size_t	vi_print_char(unsigned char arg, t_format_specs infos)
 {
 	unsigned int	width_pad;
@@ -28,7 +21,7 @@ size_t	vi_print_char(unsigned char arg, t_format_specs infos)
 	else
 		width_pad = 0;
 	if (!(infos.flags & FLAG_DASH))
-		vi_print_width_pad(width_pad);
+		vi_print_alignment(width_pad, ' ');
 	if (!(infos.precision == 0 && arg == 0))
 		ft_putchar_fd(arg, 1);
 	if (infos.flags & FLAG_DASH)

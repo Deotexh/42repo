@@ -1,7 +1,8 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 NAME = libftprintf.a
 
+HEADER = ft_printf.h
 LIBFT = libft/libft.a
 
 BONUS_DIR = bonus
@@ -20,7 +21,7 @@ OBJECTS_BONUS = $(SOURCES_BONUS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS) $(OBJECTS_UNBONUS)
+$(NAME): $(OBJECTS) $(OBJECTS_UNBONUS) $(HEADER)
 	make -C libft/ all
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJECTS) $(OBJECTS_UNBONUS)

@@ -25,7 +25,7 @@ size_t	vi_putnbr_fd_uint(long nbr, int fd)
 	return (print_count + 1);
 }
 
-static char	find_hex_char(size_t nbr, int is_useupcase)
+static char	vi_find_hex_char(size_t nbr, int is_useupcase)
 {
 	nbr %= 16;
 	if (nbr <= 9)
@@ -41,6 +41,6 @@ size_t	vi_recursive_hex_print(size_t nbr, int is_useupcase)
 	print_count = 0;
 	if (nbr / 16 != 0)
 		print_count = vi_recursive_hex_print(nbr / 16, is_useupcase);
-	ft_putchar_fd(find_hex_char(nbr, is_useupcase), 1);
+	ft_putchar_fd(vi_find_hex_char(nbr, is_useupcase), 1);
 	return (print_count + 1);
 }

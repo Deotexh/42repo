@@ -15,6 +15,11 @@
 size_t	vi_print_str(char *arg, t_format_specs infos)
 {
 	(void)infos;
+	if (!arg)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (6);
+	}
 	ft_putstr_fd(arg, 1);
 	return (ft_strlen(arg));
 }

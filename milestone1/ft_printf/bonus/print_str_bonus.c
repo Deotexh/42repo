@@ -35,6 +35,11 @@ size_t	vi_print_str(char *arg, t_format_specs infos)
 	unsigned int	width_pad;
 	unsigned int	to_write_count;
 
+	if (!arg)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (6);
+	}
 	if (infos.flags & FLAG_DOT)
 		to_write_count = get_to_write_count(arg, infos.precision);
 	else

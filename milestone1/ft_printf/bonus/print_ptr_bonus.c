@@ -63,9 +63,11 @@ size_t				vi_print_ptr(void *arg, t_format_specs infos)
 	else
 	{
 		ft_putstr_fd("(nil)", 1);
+		precision_pad = 0;
 		char_count = 5;
 	}
 	if (infos.flags & FLAG_DASH)
 		vi_print_alignment(width_pad, ' ');
 	return (char_count + precision_pad + width_pad);
+	//TODO(Fix LONG MIN and MAX)
 }

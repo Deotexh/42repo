@@ -14,11 +14,16 @@
 
 size_t	vi_print_int(int arg, t_format_specs infos)
 {
-	size_t print_count;
+	size_t	print_count;
 
+	print_count = 0;
 	(void)infos;
 	if (arg < 0)
+	{
 		ft_putchar_fd('-', 1);
-	print_count = vi_putnbr_fd_uint(-arg * (arg < 0) + arg * (arg >= 0), 1);
+		print_count++;
+	}
+	print_count += vi_putnbr_fd_uint(-(long)arg * (arg < 0) + (long)arg
+			* (arg >= 0), 1);
 	return (print_count);
 }

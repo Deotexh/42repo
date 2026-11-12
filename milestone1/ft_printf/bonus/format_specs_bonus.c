@@ -87,11 +87,16 @@ int	verify_format_syntax(const char *str, size_t i)
 	return (0);
 }
 
-size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
+ssize_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 		size_t *print_count)
 {
 	t_format_specs	infos;
 
+	//TODO(handle null)
+	if (str[i] == '\0')
+	{
+		return (-1);
+	}
 	if (str[i] == '%')
 	{
 		ft_putchar_fd('%', 1);
@@ -105,6 +110,6 @@ size_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 		return (i);
 	}
 	i = vi_get_conversion_info(&infos, str, i);
-	*print_count = vi_print_arg(str[i], infos, argptr);
+	*print_count += vi_print_arg(str[i], infos, argptr);
 	return (i + 1);
 }
