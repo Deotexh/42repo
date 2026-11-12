@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 13:05:59 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/11 13:19:36 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:03:44 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/libft.h"
@@ -14,7 +14,7 @@
 
 size_t	vi_putnbr_fd_uint(long nbr, int fd)
 {
-	int	digit;
+	int		digit;
 	size_t	print_count;
 
 	print_count = 0;
@@ -36,7 +36,7 @@ static char	vi_find_hex_char(size_t nbr, int is_useupcase)
 
 size_t	vi_recursive_hex_print(size_t nbr, int is_useupcase)
 {
-	size_t print_count;
+	size_t	print_count;
 
 	print_count = 0;
 	if (nbr / 16 != 0)

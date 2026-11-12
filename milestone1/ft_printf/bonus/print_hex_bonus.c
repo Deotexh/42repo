@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 19:50:59 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/11 14:02:26 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:12:25 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../ft_printf.h"
@@ -15,9 +15,7 @@
 static unsigned int	vi_get_precision_padding(unsigned int precision_info,
 		unsigned int digit_count)
 {
-	if (precision_info < 0)
-		return (0);
-	else if (precision_info > digit_count)
+	if (precision_info > digit_count)
 		return (precision_info - digit_count);
 	else
 		return (0);
@@ -35,25 +33,15 @@ static unsigned int	vi_get_width_padding(unsigned int width_info,
 		return (0);
 }
 
-static void	vi_print_width_pad(unsigned int width_pad, unsigned char flags,
-		unsigned int precision_pad)
+static size_t	vi_handle_hash(unsigned int arg, unsigned char flags,
+		int has_flag_hash)
 {
-	if (width_pad == 0)
-		return ;
-	if ((flags & FLAG_ZERO) && precision_pad == 0)
-		vi_print_alignment(width_pad, '0');
-	else
-		vi_print_alignment(width_pad, ' ');
-}
-
-static size_t vi_handle_hash(unsigned int arg, unsigned char flags, char format_type)
-{
-	if (flags & FLAG_HASH && !(format_type == 'X') && arg != 0)
+	if (flags & FLAG_HASH && !has_flag_hash && arg != 0)
 	{
 		ft_putstr_fd("0x", 1);
 		return (2);
 	}
-	else if (flags & FLAG_HASH && (format_type == 'X') && arg != 0)
+	else if (flags & FLAG_HASH && has_flag_hash && arg != 0)
 	{
 		ft_putstr_fd("0X", 1);
 		return (2);
@@ -66,22 +54,24 @@ size_t	vi_print_hex(unsigned int arg, t_format_specs infos, char format_type)
 	unsigned int	precision_pad;
 	unsigned int	width_pad;
 	unsigned int	digit_count;
-	size_t print_count;
+	size_t			print_count;
 
+	if (infos.flags & (FLAG_DOT | FLAG_DASH))
+		infos.flags &= ~FLAG_ZERO;
 	print_count = 0;
 	digit_count = vi_count_digits_hex((size_t)arg);
 	precision_pad = vi_get_precision_padding(infos.precision, digit_count);
 	width_pad = vi_get_width_padding(infos.width, digit_count, precision_pad,
-			infos.flags & FLAG_HASH);
-	if (!(infos.flags & FLAG_DASH) && !(infos.flags & FLAG_ZERO))
-		vi_print_width_pad(width_pad, infos.flags, precision_pad);
-	vi_handle_hash(arg, infos.flags, format_type);
+			(infos.flags & FLAG_HASH && arg != 0));
+	if (!(infos.flags & (FLAG_DASH | FLAG_ZERO)))
+		vi_print_alignment(width_pad, ' ');
+	print_count += vi_handle_hash(arg, infos.flags, format_type == 'X');
 	vi_print_alignment(precision_pad, '0');
-	if (!(infos.flags & FLAG_DASH) && infos.flags & FLAG_ZERO)
-		vi_print_width_pad(width_pad, infos.flags, precision_pad);
+	if (infos.flags & FLAG_ZERO)
+		vi_print_alignment(width_pad, '0');
 	if (!(infos.precision == 0 && arg == 0))
-		print_count = vi_recursive_hex_print((size_t)arg, (format_type == 'X'));
+		print_count += vi_recursive_hex_print(arg, format_type == 'X');
 	if (infos.flags & FLAG_DASH)
-		vi_print_width_pad(width_pad, infos.flags, precision_pad);
-	return (print_count + width_pad);
+		vi_print_alignment(width_pad, ' ');
+	return (print_count + width_pad + precision_pad);
 }

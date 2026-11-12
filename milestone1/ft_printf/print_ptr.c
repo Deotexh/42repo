@@ -14,7 +14,8 @@
 
 size_t	vi_print_ptr(void *arg, t_format_specs infos)
 {
-	size_t print_count;
+	size_t	print_count;
+
 	(void)infos;
 	if (!arg)
 	{

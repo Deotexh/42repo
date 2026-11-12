@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 NAME = libftprintf.a
 
 HEADER = ft_printf.h
@@ -7,7 +7,7 @@ LIBFT = libft/libft.a
 
 BONUS_DIR = bonus
 
-SOURCES = ft_printf.c print_helpers.c
+SOURCES = ft_printf.c helpers_print.c
 OBJECTS = $(SOURCES:.c=.o)
 
 SOURCES_UNBONUS = print_hex.c print_ptr.c print_str.c print_char.c print_int.c\
@@ -16,7 +16,7 @@ OBJECTS_UNBONUS = $(SOURCES_UNBONUS:.c=.o)
 
 SOURCES_BONUS = print_hex_bonus.c print_ptr_bonus.c print_str_bonus.c\
 				print_char_bonus.c print_int_bonus.c print_uint_bonus.c\
-				print_helpers_bonus.c format_specs_bonus.c helpers_bonus.c
+				helpers_print_bonus.c format_specs_bonus.c helpers_bonus.c
 OBJECTS_BONUS = $(SOURCES_BONUS:%.c=%.o)
 
 all: $(NAME)

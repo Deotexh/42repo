@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 13:47:44 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/09 19:57:40 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:03:05 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define FLAG_HASH (1 << 0)
-# define FLAG_DASH (1 << 1)
-# define FLAG_ZERO (1 << 2)
-# define FLAG_PLUS (1 << 3)
-# define FLAG_BLANK (1 << 4)
-# define FLAG_DOT (1 << 5)
+# define FLAG_HASH 1
+# define FLAG_DASH 2
+# define FLAG_ZERO 4
+# define FLAG_PLUS 8
+# define FLAG_BLANK 16
+# define FLAG_DOT 32
 
 typedef struct s_format_specs
 {
 	unsigned char	flags;
-	unsigned int				width;
-	unsigned int				precision;
+	unsigned int	width;
+	unsigned int	precision;
 }					t_format_specs;
 
-int					ft_printf(const char *, ...) __attribute__((format(printf,
-								1, 2)));
+int					ft_printf(const char *str,
+						...) __attribute__((format(printf, 1, 2)));
 size_t				vi_print_arg(char format_type, t_format_specs infos,
 						va_list *argptr);
 ssize_t				vi_handle_formatspec(const char *str, size_t i,

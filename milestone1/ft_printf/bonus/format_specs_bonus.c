@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 19:47:54 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/11 13:19:02 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:05:34 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../ft_printf.h"
@@ -92,7 +92,6 @@ ssize_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 {
 	t_format_specs	infos;
 
-	//TODO(handle null)
 	if (str[i] == '\0')
 	{
 		return (-1);

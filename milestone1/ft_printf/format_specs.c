@@ -6,7 +6,7 @@
 /*   By: vitruong <vitruong@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 19:47:54 by vitruong          #+#    #+#             */
-/*   Updated: 2026/11/10 17:31:00 by vitruong         ###   ########.fr       */
+/*   Updated: 2026/11/12 16:04:11 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -30,7 +30,7 @@ ssize_t	vi_handle_formatspec(const char *str, size_t i, va_list *argptr,
 		size_t *print_count)
 {
 	if (str[i] == '\0')
-			return (-1);
+		return (-1);
 	if (!vi_is_fromset(str[i], "cpdiusxX"))
 	{
 		ft_putchar_fd('%', 1);
