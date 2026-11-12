@@ -9,7 +9,7 @@
 /*   Updated: 2026/11/11 14:03:19 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <stddef.h>
 
 unsigned int	vi_count_digits_hex(size_t n)

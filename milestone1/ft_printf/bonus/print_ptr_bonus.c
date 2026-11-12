@@ -9,8 +9,8 @@
 /*   Updated: 2026/11/11 13:07:33 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
-#include "ft_printf.h"
+#include "../libft/libft.h"
+#include "../ft_printf.h"
 
 static unsigned int	vi_get_precision_padding(unsigned int precision_info,
 		unsigned int digit_count)

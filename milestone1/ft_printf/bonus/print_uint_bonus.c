@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "libft/libft.h"
+#include "../ft_printf.h"
+#include "../libft/libft.h"
 
 static unsigned int	vi_get_precision_padding(unsigned int precision_info,
 		unsigned int digit_count)

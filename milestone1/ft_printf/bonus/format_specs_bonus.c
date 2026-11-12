@@ -9,8 +9,8 @@
 /*   Updated: 2026/11/11 13:19:02 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
-#include "libft/libft.h"
+#include "../ft_printf.h"
+#include "../libft/libft.h"
 
 static int	vi_is_fromset(char const c, char const *set)
 {

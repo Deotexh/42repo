@@ -9,8 +9,8 @@
 /*   Updated: 2026/11/11 13:19:18 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
-#include "libft/libft.h"
+#include "../ft_printf.h"
+#include "../libft/libft.h"
 
 static void	vi_print_width_pad(unsigned int width_pad)
 {

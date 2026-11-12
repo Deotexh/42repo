@@ -9,8 +9,8 @@
 /*   Updated: 2026/11/09 19:41:48 by vitruong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
-#include "libft/libft.h"
+#include "../ft_printf.h"
+#include "../libft/libft.h"
 
 static unsigned int get_to_write_count(char *str, unsigned int limit)
 {
