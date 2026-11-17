@@ -11,34 +11,21 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-char	*vi_realloc_str(char *str, size_t old_size, size_t size)
+void	vi_clear_buffer(char *buffer, size_t start)
 {
-	char	*new;
 	size_t	i;
 
-	if (size <= old_size || size == 0)
-		return (str);
-	new = malloc(size);
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (i < old_size)
+	i = start;
+	while (i < BUFFER_SIZE + 1)
 	{
-		new[i] = str[i];
+		buffer[i] = '\0';
 		i++;
 	}
-	while (i < size)
-	{
-		new[i] = '\0';
-		i++;
-	}
-	free(str);
-	return (new);
 }
 
-size_t vi_strlen(char *str)
+size_t	vi_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -46,25 +33,25 @@ size_t vi_strlen(char *str)
 	return (i);
 }
 
-void	vi_strlcat(char *dst, const char *src, size_t size)
+void	vi_append_buffer(t_fd_read_infos *result, char *buffer)
 {
 	size_t	i;
 	size_t	size_cpy;
-	size_t	dst_len;
 
-	if (!dst || !src)
+	if (!result || !buffer)
 		return ;
-	dst_len = vi_strlen(dst);
-	size_cpy = size - dst_len - 1;
+	size_cpy = result->size - result->len - 1;
 	i = 0;
 	while (i < size_cpy)
 	{
-		if (src[i] == '\0')
+		if (buffer[i] == '\0')
 			break ;
-		dst[i + dst_len] = src[i];
+		result->str[result->len + i] = buffer[i];
 		i++;
 	}
-	dst[i + dst_len] = '\0';
+	result->str[result->len + i] = '\0';
+	result->len += i;
+	vi_clear_buffer(buffer, 0);
 }
 
 size_t	vi_get_enough_size(size_t old_size)
@@ -77,14 +64,14 @@ size_t	vi_get_enough_size(size_t old_size)
 	return (new_size);
 }
 
-char	vi_is_completeline(char *result, size_t result_size)
+char	vi_is_line(t_fd_read_infos *result)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < result_size)
+	while (i < result->size)
 	{
-		if (result[i] == '\n')
+		if (result->str[i] == '\n')
 			return (1);
 		i++;
 	}

@@ -12,72 +12,111 @@
 #include "get_next_line.h"
 #include <unistd.h>
 
-void	vi_clear_buffer(char *buffer, int buffer_size)
+static char	*vi_realloc_str(char *str, size_t old_size, size_t size)
 {
-	int i;
+	char	*new;
+	size_t	i;
 
+	if (size <= old_size || size == 0)
+		return (str);
+	new = malloc(size);
+	if (!new)
+		return (NULL);
 	i = 0;
-	while (i < buffer_size)
+	while (i < old_size && str)
 	{
-		buffer[i] = '\0';
+		new[i] = str[i];
 		i++;
 	}
+	while (i < size)
+	{
+		new[i] = '\0';
+		i++;
+	}
+	free(str);
+	return (new);
 }
 
-int	vi_extract_excess(t_fd_read_infos *excess, char *result, size_t result_size)
+static int	vi_extract_excess(t_fd_read_infos *excess, t_fd_read_infos *result)
 {
-	size_t	i;
+	ssize_t	i;
 	size_t	extract_start;
 
 	extract_start = 0;
-	while (result[extract_start] != '\n')
+	while (result->str[extract_start] != '\n' && extract_start < result->len)
 		extract_start++;
 	extract_start++;
-	excess->str = malloc(result_size - extract_start);
+	if (extract_start >= result->len)
+	{
+		excess->str = NULL;
+		return (1);
+	}
+	excess->size = (result->len - extract_start + 1);
+	excess->str = malloc(result->size);
 	if (!excess->str)
 		return (0);
-	excess->size = (result_size - extract_start);
-	i = 0;
-	while (extract_start + i < result_size)
+	i = -1;
+	while (extract_start + ++i < result->len)
 	{
-		excess->str[i] = result[extract_start + i];
-		result[extract_start + i] = '\0';
-		i++;
+		excess->str[i] = result->str[extract_start + i];
+		result->str[extract_start + i] = '\0';
 	}
+	excess->str[i] = '\0';
+	excess->len = i;
 	return (1);
+}
+
+static void	vi_init(char **buffer, size_t *temp_read_bytes,
+		t_fd_read_infos *result, t_fd_read_infos *excess)
+{
+	*buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return ;
+	vi_clear_buffer(*buffer, 0);
+	*temp_read_bytes = BUFFER_SIZE;
+	result->size = vi_get_enough_size(excess->size);
+	result->str = vi_realloc_str(excess->str, excess->size, result->size);
+	if (!excess->str)
+		result->len = 0;
+	else
+		result->len = excess->len;
+}
+
+static size_t	vi_read(int fd, char *buffer)
+{
+	size_t	read_bytes;
+
+	read_bytes = read(fd, buffer, BUFFER_SIZE);
+	if (read_bytes != BUFFER_SIZE)
+		vi_clear_buffer(buffer, read_bytes);
+	return (read_bytes);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_fd_read_infos	excess = {.str = NULL, .size = 0};
-	char					buffer[BUFFER_SIZE + 1];
-	char					*result;
-	size_t					result_size;
-	size_t					temp_read_bytes;
+	static t_fd_read_infos	excess = {.str = NULL, .size = 0, .len = 0};
+	t_fd_read_infos			result;
+	char					*buffer;
+	size_t					read_bytes;
 
-	vi_clear_buffer(buffer, BUFFER_SIZE + 1);
-	temp_read_bytes = BUFFER_SIZE;
-	result_size = vi_get_enough_size(excess.size);
-	result = vi_realloc_str(excess.str, excess.size, result_size);
-	if (!result)
+	vi_init(&buffer, &read_bytes, &result, &excess);
+	if (!result.str || !buffer)
 		return (NULL);
-	while (temp_read_bytes == BUFFER_SIZE && !vi_is_completeline(result,
-			result_size))
+	while (read_bytes == BUFFER_SIZE && !vi_is_line(&result))
 	{
-		temp_read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (!temp_read_bytes)
+		read_bytes = vi_read(fd, buffer);
+		if (!read_bytes && !result.len)
 			return (NULL);
-		if (vi_strlen(result) + (size_t)BUFFER_SIZE > result_size)
+		if (result.len + (size_t)BUFFER_SIZE + 1 > result.size)
 		{
-			result_size = vi_get_enough_size(result_size + BUFFER_SIZE);
-			result = vi_realloc_str(result, vi_strlen(result), result_size);
-			if (!result)
+			result.size = vi_get_enough_size(result.size + BUFFER_SIZE);
+			result.str = vi_realloc_str(result.str, result.len, result.size);
+			if (!result.str)
 				return (NULL);
 		}
-		vi_strlcat(result, buffer, result_size);
-		vi_clear_buffer(buffer, BUFFER_SIZE + 1);
+		vi_append_buffer(&result, buffer);
 	}
-	if (!vi_extract_excess(&excess, result, result_size))
+	if (!vi_extract_excess(&excess, &result))
 		return (NULL);
-	return (result);
+	return (result.str);
 }
