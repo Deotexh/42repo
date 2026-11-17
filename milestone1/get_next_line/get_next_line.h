@@ -22,14 +22,14 @@ typedef struct s_fd_read_infos
 {
 	char	*str;
 	size_t	size;
-	size_t	len;
+	size_t	offset;
+	char is_active;
 }			t_fd_read_infos;
 
 char		*get_next_line(int fd);
 size_t		vi_get_enough_size(size_t old_size);
 char		vi_is_line(t_fd_read_infos *result);
-void		vi_append_buffer(t_fd_read_infos *result, char *buffer);
 size_t		vi_strlen(char *str);
-void		vi_clear_buffer(char *buffer, size_t start);
+void	vi_clear_buffer(char *buffer, size_t start, size_t end);
 
 #endif // GET_NEXT_LINE_H

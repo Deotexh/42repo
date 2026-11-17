@@ -11,47 +11,16 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-void	vi_clear_buffer(char *buffer, size_t start)
+void	vi_clear_buffer(char *buffer, size_t start, size_t end)
 {
 	size_t	i;
 
 	i = start;
-	while (i < BUFFER_SIZE + 1)
+	while (i < end)
 	{
 		buffer[i] = '\0';
 		i++;
 	}
-}
-
-size_t	vi_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	vi_append_buffer(t_fd_read_infos *result, char *buffer)
-{
-	size_t	i;
-	size_t	size_cpy;
-
-	if (!result || !buffer)
-		return ;
-	size_cpy = result->size - result->len - 1;
-	i = 0;
-	while (i < size_cpy)
-	{
-		if (buffer[i] == '\0')
-			break ;
-		result->str[result->len + i] = buffer[i];
-		i++;
-	}
-	result->str[result->len + i] = '\0';
-	result->len += i;
-	vi_clear_buffer(buffer, 0);
 }
 
 size_t	vi_get_enough_size(size_t old_size)
