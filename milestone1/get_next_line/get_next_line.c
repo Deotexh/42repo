@@ -12,69 +12,65 @@
 #include "get_next_line.h"
 #include <unistd.h>
 
-static void	vi_realloc(t_fd_read_infos *info, size_t wish_size)
+static char	*vi_realloc(t_fd_read_infos *info, size_t wish_size)
 {
 	char	*new;
 	size_t	size;
 	size_t	i;
 
+	if (wish_size < info->size)
+		return (info->str);
 	size = vi_get_enough_size(wish_size);
 	new = malloc(size);
 	if (!new)
 	{
 		free(info->str);
-		info->str = NULL;
-		return ;
+		return (NULL);
 	}
+	vi_clear_buffer(new, 0, size);
 	i = 0;
 	while (i < info->offset && info->str)
 	{
 		new[i] = info->str[i];
 		i++;
 	}
-	while (i < size)
-	{
-		new[i] = '\0';
-		i++;
-	}
 	free(info->str);
-	info->str = new;
 	info->size = size;
-	return ;
+	return (new);
 }
 
 static int	vi_extract_excess(t_fd_read_infos *buffer, char **result)
 {
 	size_t	i;
-	size_t	extract_start;
+	size_t	result_end;
 
-	extract_start = 0;
-	while (buffer->str[extract_start] != '\n' && extract_start < buffer->offset)
-		extract_start++;
+	result_end = 0;
+	while (buffer->str[result_end] != '\n' && result_end + 1 < buffer->offset)
+		result_end++;
 	*result = buffer->str;
-	if (extract_start + 1 > buffer->offset)
+	if (result_end + 1 >= buffer->offset)
 	{
 		buffer->str = NULL;
 		return (1);
 	}
-	buffer->size = (buffer->offset - extract_start - 1);
+	buffer->size = (buffer->offset - result_end - 1);
 	buffer->str = malloc(buffer->size);
 	if (!buffer->str)
 		return (0);
 	i = 0;
-	while (i < buffer->size + 1)
+	while (i < buffer->size)
 	{
-		buffer->str[i] = (*result)[extract_start + 1 + i];
-		(*result)[extract_start + 1 + i] = '\0';
+		buffer->str[i] = (*result)[result_end + 1 + i];
+		(*result)[result_end + 1 + i] = '\0';
 		i++;
 	}
-	buffer->offset = i;
+	buffer->offset = buffer->size;
 	return (1);
 }
 
 static void	vi_init(t_fd_read_infos *buffer, char **result)
 {
-	vi_realloc(buffer, buffer->size);
+	vi_realloc(buffer, BUFFER_SIZE + 1);
 	*result = NULL;
 }
 
@@ -84,15 +80,15 @@ static size_t	vi_read(int fd, t_fd_read_infos *buffer)
 
 	if (buffer->offset + (size_t)BUFFER_SIZE + 1 > buffer->size)
 	{
-		vi_realloc(buffer, buffer->offset + BUFFER_SIZE);
+		vi_realloc(buffer, buffer->offset + BUFFER_SIZE + 1);
 		if (!buffer->str)
 			return (-1);
 	}
 	read_bytes = read(fd, buffer->str + buffer->offset, BUFFER_SIZE);
-	if (!read_bytes)
-	{
+	if (!read_bytes && buffer->offset)
 		return (0);
-	}
+	else if (!read_bytes && !buffer->offset)
+		return (-1);
 	buffer->offset += read_bytes;
 	if (read_bytes != BUFFER_SIZE)
 		vi_clear_buffer(buffer->str, buffer->offset, buffer->size);
@@ -101,13 +97,12 @@ static size_t	vi_read(int fd, t_fd_read_infos *buffer)
 
 char	*get_next_line(int fd)
 {
-	static t_fd_read_infos	buffer = {.str = NULL, .size = 0, .offset = 0,
-			.is_active = 1};
+	static t_fd_read_infos	buffer = {.str = NULL, .size = 0, .offset = 0};
 	int						read_code;
 	char					*result;
 
 	vi_init(&buffer, &result);
-	if (!buffer.is_active)
+	if (!buffer.str)
 		return (NULL);
 	while (!vi_is_line(&buffer))
 	{
