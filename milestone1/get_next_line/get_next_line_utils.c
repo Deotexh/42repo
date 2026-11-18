@@ -35,9 +35,9 @@ char	vi_is_line(t_fd_read_infos *result)
 	return (0);
 }
 
-void vi_copy(char *dst, char *src, size_t len)
+void	vi_copy(char *dst, char *src, size_t len)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i + sizeof(size_t) < len)

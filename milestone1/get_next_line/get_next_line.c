@@ -90,7 +90,7 @@ static size_t	vi_read(int fd, t_fd_read_infos *buffer)
 
 char	*get_next_line(int fd)
 {
-	static t_fd_read_infos	buffer = {.str = NULL, .size = 0, .offset = 0 };
+	static t_fd_read_infos	buffer = {.str = NULL, .size = 0, .offset = 0};
 	char					*result;
 	int						read_code;
 
