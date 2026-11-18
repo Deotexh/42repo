@@ -11,18 +11,6 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-void	vi_clear_buffer(char *buffer, size_t start, size_t end)
-{
-	size_t	i;
-
-	i = start;
-	while (i < end)
-	{
-		buffer[i] = '\0';
-		i++;
-	}
-}
-
 size_t	vi_get_enough_size(size_t old_size)
 {
 	size_t	new_size;
@@ -38,11 +26,28 @@ char	vi_is_line(t_fd_read_infos *result)
 	size_t	i;
 
 	i = 0;
-	while (i < result->size)
+	while (i < result->offset)
 	{
 		if (result->str[i] == '\n')
 			return (1);
 		i++;
 	}
 	return (0);
+}
+
+void vi_copy(char *dst, char *src, size_t len)
+{
+	size_t i;
+
+	i = 0;
+	while (i + sizeof(size_t) < len)
+	{
+		*(size_t *)(dst + i) = *(size_t *)(src + i);
+		i += sizeof(size_t);
+	}
+	while (i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
 }

@@ -23,13 +23,12 @@ typedef struct s_fd_read_infos
 	char	*str;
 	size_t	size;
 	size_t	offset;
-	char is_active;
 }			t_fd_read_infos;
 
 char		*get_next_line(int fd);
 size_t		vi_get_enough_size(size_t old_size);
 char		vi_is_line(t_fd_read_infos *result);
 size_t		vi_strlen(char *str);
-void	vi_clear_buffer(char *buffer, size_t start, size_t end);
+void vi_copy(char *dst, char *src, size_t len);
 
 #endif // GET_NEXT_LINE_H
