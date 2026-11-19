@@ -83,7 +83,7 @@ static size_t	vi_read(int fd, t_fd_read_infos *buffer)
 	}
 	read_bytes = read(fd, buffer->str + buffer->offset, BUFFER_SIZE);
 	if (read_bytes == -1 || (!read_bytes && !buffer->offset))
-		return (free(buffer->str), -1);
+		return (free(buffer->str), buffer->str = NULL, -1);
 	else if (!read_bytes && buffer->offset)
 		return (0);
 	buffer->offset += read_bytes;

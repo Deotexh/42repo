@@ -52,26 +52,47 @@ void	vi_copy(char *dst, char *src, size_t len)
 	}
 }
 
-ssize_t	vi_get_index_from_fd(t_fd_infos_storer *arr, int fd)
+void	*vi_realloc(void *ptr, size_t *old_size, size_t wish_size)
 {
-	size_t i;
+	char	*new;
+	size_t	size;
+
+	if (wish_size <= *old_size)
+		return (ptr);
+	size = vi_get_enough_size(wish_size);
+	new = malloc(size);
+	if (!new)
+		return (free(ptr), NULL);
+	if (ptr)
+		vi_copy(new, ptr, *old_size);
+	*old_size = size;
+	return (free(ptr), new);
+}
+
+size_t	vi_manage_buffers(t_fd_infos_storer *arr, int fd)
+{
+	size_t	i;
 
 	i = 0;
-	while (i < arr->size)
+	while (i * sizeof(t_fd_read_infos) < arr->offset)
 	{
 		if (arr->buffers[i].fd == fd)
 			return (i);
+		if (arr->buffers[i].fd == -1)
+		{
+			arr->buffers[i] = (t_fd_read_infos){NULL, 0, 0, fd};
+			return (i);
+		}
 		i++;
 	}
-	return (-1);
-}
-
-void	vi_manage_buffers(t_fd_infos_storer *arr, size_t index,
-		unsigned char op_code, int fd)
-{
-	if (op_code == BUF_SET)
+	if (i * sizeof(t_fd_read_infos) == arr->size)
 	{
-		free(arr->buffers[index].str);
-		arr->buffers[index] = (t_fd_read_infos){NULL, 0, 0, fd};
+		arr->buffers = vi_realloc(arr->buffers, &(arr->size), arr->size
+				+ sizeof(t_fd_read_infos));
+		if (!arr->buffers)
+			return (arr->error_occured = 1, 0);
 	}
+	arr->buffers[i] = (t_fd_read_infos){NULL, 0, 0, fd};
+	arr->offset += sizeof(t_fd_read_infos);
+	return (i);
 }

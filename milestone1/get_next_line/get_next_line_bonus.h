@@ -42,8 +42,7 @@ size_t				vi_get_enough_size(size_t old_size);
 char				vi_is_line(t_fd_read_infos *result);
 size_t				vi_strlen(char *str);
 void				vi_copy(char *dst, char *src, size_t len);
-ssize_t	vi_get_index_from_fd(t_fd_infos_storer *arr, int fd);
-void	vi_manage_buffers(t_fd_infos_storer *arr, size_t index,
-		unsigned char op_code, int fd);
+size_t				vi_manage_buffers(t_fd_infos_storer *arr, int fd);
+void				*vi_realloc(void *ptr, size_t *old_size, size_t wish_size);
 
 #endif // GET_NEXT_LINE_BONUS_H
