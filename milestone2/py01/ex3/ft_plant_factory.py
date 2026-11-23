@@ -7,8 +7,6 @@ class Plant:
         self.height = height
         self.age = age
         self.growth_factor = round(growth_factor, 1)
-        print(f"Created: {self.name.capitalize()}: {
-              self.height}cm, {self.age} days old")
 
     name: str
     height: float
