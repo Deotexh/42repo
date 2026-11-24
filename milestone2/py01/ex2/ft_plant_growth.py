@@ -1,26 +1,26 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 class Plant:
-    def __init__(self, name: str, height: float, age: float,
+    def __init__(self, name: str, height: float, days_old: int,
                  growth_factor: float):
         self.name = name
         self.height = height
-        self.age = age
+        self.days_old = days_old
         self.growth_factor = round(growth_factor, 1)
 
     name: str
     height: float
     growth_factor: float
-    age: float
+    days_old: int
 
-    def show(self):
+    def show(self) -> None:
         print(f"{self.name.capitalize()}: {
-              self.height}cm, {self.age} days old")
+              self.height}cm, {self.days_old} days old")
 
-    def age(self):
-        ++self.age
+    def age(self) -> None:
+        self.days_old += 1
 
-    def grow(self):
+    def grow(self) -> None:
         self.height = round(self.height * self.growth_factor, 1)
 
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     plant.show()
     for i in range(1, 8):
         print(f"=== Day {i} ===")
-        total_growth += round(plant.height * plant.growth_factor, 1)
+        total_growth += round(plant.height * plant.growth_factor - plant.height, 1)
         plant.age()
         plant.grow()
         plant.show()
