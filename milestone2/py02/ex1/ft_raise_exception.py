@@ -1,12 +1,13 @@
 def input_temperature(temp_str: str) -> int:
-    try:
-        temp_int: int = int(temp_str);
-    except ValueError:
-        print("Caught input_temperature error: invalid input")
-    if (temp_int >= 0 and temp_int <= 40):
-        return temp_int
-    else:
-        raise()
+    temp_int: int = int(temp_str)
+    if (temp_int < 0):
+        raise ValueError(temp_str + " is too cold for this plant" +
+                         "you ain't that cold little bro")
+    elif (temp_int > 40):
+        raise ValueError(temp_str + " is TOO HOT!!! Do you want a garden " +
+                         "or a damn hamam???")
+    return int(temp_str)
+
 
 def test_temperature() -> None:
     print("Input is '25'")
@@ -15,13 +16,25 @@ def test_temperature() -> None:
     print("CELSIUS!!!")
 
     print("Input is 'abc'")
-    input_temperature("abc")
+    try:
+        tmp = input_temperature("abc")
+    except ValueError:
+        print("Caught input_temperature error: 'abc' is made ", end='')
+        print("of letters there's not even a single digit????")
 
-    print("Input is '100'")
-    input_temperature("100")
+    try:
+        tmp = input_temperature("100")
+    except Exception:
+        pass
 
-    print("Input is '-50'")
-    input_temperature("-50")
+    try:
+        tmp = input_temperature("-50")
+    except Exception:
+        pass
+
+    print("Tenjō tenge, yuiga dokuson")
+    print("(Throughout heaven and earth, I alone am the honored one)")
+
 
 if __name__ == "__main__":
     test_temperature()
