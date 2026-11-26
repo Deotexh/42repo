@@ -2,7 +2,7 @@ import sys
 
 if __name__ == "__main__":
     i: int = 1
-    score: list = []
+    score: list[int] = []
     while (i < len(sys.argv)):
         try:
             score.append(int(sys.argv[i]))
